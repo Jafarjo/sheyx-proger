@@ -405,8 +405,17 @@ async function initialize() {
 
   const adminEmail = normalizeEmail(process.env.ADMIN_EMAIL);
   const adminPassword = process.env.ADMIN_PASSWORD || '';
-  if (!isValidEmail(adminEmail) || adminPassword.length < 14 || adminPassword.length > 128) {
-    throw new Error('Set a valid ADMIN_EMAIL and an ADMIN_PASSWORD of 14-128 characters.');
+  if (!adminEmail) {
+    throw new Error('ADMIN_EMAIL is missing. Set it in this Render web service environment.');
+  }
+  if (!isValidEmail(adminEmail)) {
+    throw new Error('ADMIN_EMAIL must be a valid email address (maximum 254 characters).');
+  }
+  if (adminPassword.length < 14) {
+    throw new Error('ADMIN_PASSWORD must be set and contain at least 14 characters.');
+  }
+  if (adminPassword.length > 128) {
+    throw new Error('ADMIN_PASSWORD must contain no more than 128 characters.');
   }
 
   const passwordHash = await bcrypt.hash(adminPassword, 12);
