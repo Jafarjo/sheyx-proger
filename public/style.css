@@ -604,6 +604,45 @@ a {
   line-height: 1.7;
 }
 
+.contact-card {
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(12, 30, 48, 0.9);
+}
+
+.contact-card h3 {
+  margin: 0 0 14px;
+}
+
+.contact-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.contact-links a {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--text);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.contact-links a:hover,
+.contact-links a:focus-visible {
+  border-color: rgba(105, 210, 255, 0.7);
+  background: rgba(58, 162, 255, 0.1);
+}
+
+.contact-links span {
+  color: var(--muted);
+}
+
 .auth-section {
   padding-top: 20px;
 }
@@ -848,6 +887,10 @@ a {
   }
 
   .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-links {
     grid-template-columns: 1fr;
   }
 

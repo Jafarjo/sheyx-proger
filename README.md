@@ -4,10 +4,12 @@ An original trilingual (Russian, English, Tajik) programming-learning platform. 
 
 ## Learning features
 
-- Beginner lessons for web development (HTML, CSS, JavaScript) and Python.
+- Nine beginner lessons each for web development (HTML, CSS, JavaScript) and Python.
 - Each lesson explains a concept, shows code, offers a small task, and checks an answer.
+- Lessons include optional privacy-enhanced YouTube embeds from freeCodeCamp.org's beginner courses.
 - Lessons unlock in order. Progress is stored per account in PostgreSQL.
 - Correct answers award XP once per lesson; the leaderboard ranks students by XP and completed lessons.
+- Three short programming mini-games reinforce output prediction, debugging, and HTML basics. Game scores are practice-only and do not affect leaderboard XP.
 - Students have individual dashboards. The protected admin page shows student progress and rankings.
 - Public home page, lessons, account pages, and course content are available in Russian, English, and Tajik.
 
@@ -49,6 +51,7 @@ Free-plan limits and availability can change. Render may sleep while idle, and d
 - `/register.html`, `/login.html` — accounts
 - `/learn.html` — course paths and ordered lessons
 - `/lesson.html?course=web&lesson=web-html` — lesson content and knowledge check
+- `/games.html` — programming mini-games
 - `/dashboard.html` — student's XP and saved progress
 - `/admin.html` — protected student progress and ranking
 - `/api/health` — deployment health check

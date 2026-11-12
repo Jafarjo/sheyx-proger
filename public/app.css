@@ -526,6 +526,37 @@ a.lesson-list-link:hover {
   line-height: 1.8;
 }
 
+.lesson-video-section {
+  margin-top: 26px;
+}
+
+.lesson-video {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #05111f;
+}
+
+.lesson-video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.lesson-video a {
+  display: block;
+  padding: 12px 16px;
+  color: var(--accent);
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.lesson-video a:hover,
+.lesson-video a:focus-visible {
+  text-decoration: underline;
+}
+
 .code-example {
   overflow-x: auto;
   padding: 20px;
@@ -603,6 +634,141 @@ a.lesson-list-link:hover {
   margin-top: 24px;
 }
 
+.games-shell {
+  width: min(100%, 980px);
+}
+
+.games-intro {
+  margin: 12px 0 28px;
+}
+
+.games-intro h1 {
+  margin: 0 0 12px;
+}
+
+.game-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 16px;
+}
+
+.game-mode-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(20, 52, 83, 0.75), rgba(9, 23, 39, 0.85));
+}
+
+.game-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(105, 210, 255, 0.3);
+  border-radius: 14px;
+  background: rgba(58, 162, 255, 0.14);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.game-mode-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+}
+
+.game-mode-card p {
+  flex: 1;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.game-mode-card .btn {
+  width: 100%;
+}
+
+.game-panel {
+  margin-top: 24px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.025);
+  scroll-margin-top: 20px;
+}
+
+.game-status {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+  color: var(--muted);
+}
+
+.game-status strong {
+  color: var(--accent);
+}
+
+.game-panel h2 {
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.game-options {
+  display: grid;
+  gap: 10px;
+}
+
+.game-option {
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text);
+  text-align: left;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.game-option:hover:not(:disabled),
+.game-option:focus-visible {
+  border-color: rgba(105, 210, 255, 0.7);
+  background: rgba(58, 162, 255, 0.1);
+}
+
+.game-option:disabled {
+  cursor: default;
+}
+
+.game-option.correct {
+  border-color: #55c99a;
+  background: rgba(42, 153, 111, 0.16);
+}
+
+.game-option.incorrect {
+  border-color: #ff8290;
+  background: rgba(215, 72, 91, 0.16);
+}
+
+.game-feedback {
+  min-height: 24px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.game-no-xp {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.games-back {
+  margin: 24px 0 0;
+}
+
 @media (max-width: 560px) {
   .leaderboard-card {
     padding: 6px 12px;
@@ -631,5 +797,9 @@ a.lesson-list-link:hover {
   .lesson-footer {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .game-panel {
+    padding: 16px;
   }
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Играй и учись программировать на sheyx-proger." />
+    <title>Игры — sheyx-proger</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <script src="/script.js" defer></script>
+    <script src="/games.js" defer></script>
+  </head>
+  <body class="portal-page learning-page games-page">
+    <div class="page-bg"></div>
+    <main class="portal-card games-shell">
+      <header class="portal-header">
+        <a class="brand" href="/">
+          <span class="brand-mark">S</span><span>sheyx-proger</span>
+        </a>
+        <div class="header-actions">
+          <div class="lang-switcher" aria-label="Language">
+            <button class="lang-btn" data-lang="ru" type="button">RU</button><button class="lang-btn" data-lang="en" type="button">EN</button><button class="lang-btn" data-lang="tg" type="button">TJ</button>
+          </div>
+          <a class="btn btn-secondary small" href="/learn.html" data-i18n="account.allCourses">Все курсы</a>
+        </div>
+      </header>
+
+      <section class="games-intro">
+        <p class="eyebrow" data-i18n="games.eyebrow">Играй и учись</p>
+        <h1 id="gamesTitle" data-i18n="games.title">Мини-игры для программистов</h1>
+        <p class="portal-intro" data-i18n="games.description">Тренируй логику, находи ошибки и вспоминай основы HTML. Выбери игру и пройди четыре раунда.</p>
+      </section>
+
+      <section class="game-mode-grid" aria-labelledby="gamesTitle">
+        <article class="game-mode-card">
+          <span class="game-icon" aria-hidden="true">&lt;/&gt;</span>
+          <h2 data-i18n="games.output">Угадай результат</h2>
+          <p data-i18n="games.outputDesc">Предскажи, что выведет код.</p>
+          <button class="btn btn-primary" type="button" data-game-mode="output" data-i18n="games.start">Начать игру</button>
+        </article>
+        <article class="game-mode-card">
+          <span class="game-icon" aria-hidden="true">⚡</span>
+          <h2 data-i18n="games.debug">Охота на ошибку</h2>
+          <p data-i18n="games.debugDesc">Найди строку, из-за которой код работает неверно.</p>
+          <button class="btn btn-primary" type="button" data-game-mode="debug" data-i18n="games.start">Начать игру</button>
+        </article>
+        <article class="game-mode-card">
+          <span class="game-icon" aria-hidden="true">#</span>
+          <h2 data-i18n="games.html">HTML-детектив</h2>
+          <p data-i18n="games.htmlDesc">Выбери правильный HTML-элемент для задачи.</p>
+          <button class="btn btn-primary" type="button" data-game-mode="html" data-i18n="games.start">Начать игру</button>
+        </article>
+      </section>
+
+      <section id="gamePanel" class="game-panel hidden" aria-live="polite">
+        <div class="game-status">
+          <span><span data-i18n="games.questionCounter">Раунд</span> <strong id="gameRound">1 / 4</strong></span>
+          <span><span data-i18n="games.score">Счёт</span> <strong id="gameScore">0</strong></span>
+        </div>
+        <h2 id="gamePrompt"></h2>
+        <pre id="gameCode" class="code-example hidden"><code></code></pre>
+        <div id="gameOptions" class="game-options"></div>
+        <p id="gameFeedback" class="game-feedback" role="status"></p>
+        <button id="gameNext" class="btn btn-primary hidden" type="button" data-i18n="games.next">Следующий раунд</button>
+        <p class="game-no-xp" data-i18n="games.noXp">Очки мини-игр не влияют на рейтинг XP.</p>
+      </section>
+      <p class="games-back"><a class="text-link" href="/#courses" data-i18n="account.backToCourses">← К курсам</a></p>
+    </main>
+  </body>
+</html>

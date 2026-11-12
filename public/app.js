@@ -9,7 +9,8 @@ const uiText = {
     alreadyCorrect: 'Верно! Этот урок уже засчитан.', incorrect: 'Пока неверно. Перечитай материал и попробуй ещё раз.',
     chooseAnswer: 'Сначала выбери вариант ответа.', loadError: 'Не удалось загрузить данные.',
     place: 'Место', student: 'Ученик', date: 'Дата регистрации', noUsers: 'Пока никто не начал учиться.',
-    progress: 'Прогресс', retry: 'Повторить урок', loadingError: 'Ошибка загрузки: '
+    progress: 'Прогресс', retry: 'Повторить урок', loadingError: 'Ошибка загрузки: ',
+    videoLesson: 'Видео к уроку'
   },
   en: {
     lessons: 'lessons', xp: 'XP', completed: 'Completed', locked: 'Finish the previous lesson first',
@@ -19,7 +20,8 @@ const uiText = {
     alreadyCorrect: 'Correct! This lesson was already completed.', incorrect: 'Not quite. Review the lesson and try again.',
     chooseAnswer: 'Choose an answer first.', loadError: 'Could not load data.',
     place: 'Rank', student: 'Student', date: 'Joined', noUsers: 'No one has started learning yet.',
-    progress: 'Progress', retry: 'Review lesson', loadingError: 'Loading error: '
+    progress: 'Progress', retry: 'Review lesson', loadingError: 'Loading error: ',
+    videoLesson: 'Lesson video'
   },
   tg: {
     lessons: 'дарс', xp: 'XP', completed: 'Анҷом ёфт', locked: 'Аввал дарси пешинаро анҷом диҳед',
@@ -29,7 +31,8 @@ const uiText = {
     alreadyCorrect: 'Дуруст! Ин дарс аллакай анҷом ёфта буд.', incorrect: 'Ҳоло нодуруст аст. Маводро хонда, бори дигар кӯшиш кунед.',
     chooseAnswer: 'Аввал як ҷавобро интихоб кунед.', loadError: 'Маълумот бор нашуд.',
     place: 'Ҷой', student: 'Донишҷӯ', date: 'Санаи сабти ном', noUsers: 'Ҳоло касе омӯзишро оғоз накардааст.',
-    progress: 'Пешрафт', retry: 'Такрори дарс', loadingError: 'Хатои боргирӣ: '
+    progress: 'Пешрафт', retry: 'Такрори дарс', loadingError: 'Хатои боргирӣ: ',
+    videoLesson: 'Видеои дарс'
   }
 };
 
@@ -298,6 +301,24 @@ async function initializeLesson() {
     document.getElementById('lessonCode').textContent = lesson.content.code;
     document.getElementById('lessonTask').textContent = lesson.content.task;
     document.getElementById('quizQuestion').textContent = lesson.content.question;
+
+    const video = document.getElementById('lessonVideo');
+    if (/^[A-Za-z0-9_-]{11}$/.test(lesson.video?.id || '')) {
+      const frame = document.createElement('iframe');
+      frame.src = `https://www.youtube-nocookie.com/embed/${lesson.video.id}`;
+      frame.title = lesson.video.title;
+      frame.loading = 'lazy';
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      frame.allowFullscreen = true;
+      video.append(frame);
+      const source = document.createElement('a');
+      source.href = `https://www.youtube.com/watch?v=${encodeURIComponent(lesson.video.id)}`;
+      source.target = '_blank';
+      source.rel = 'noopener noreferrer';
+      source.textContent = lesson.video.title;
+      video.append(source);
+    }
 
     const options = document.getElementById('quizOptions');
     options.replaceChildren();
