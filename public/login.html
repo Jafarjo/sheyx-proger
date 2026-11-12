@@ -7,6 +7,7 @@
     <title>Вход — sheyx-proger</title>
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/app.css" />
+    <script src="/script.js" defer></script>
     <script src="/app.js" defer></script>
   </head>
   <body class="portal-page">
@@ -15,23 +16,26 @@
       <a class="brand portal-brand" href="/">
         <span class="brand-mark">S</span><span>sheyx-proger</span>
       </a>
-      <p class="eyebrow">С возвращением</p>
-      <h1>Войти в аккаунт</h1>
-      <p class="portal-intro">Продолжите обучение в личном кабинете.</p>
+      <div class="portal-language lang-switcher" aria-label="Language">
+        <button class="lang-btn" data-lang="ru" type="button">RU</button><button class="lang-btn" data-lang="en" type="button">EN</button><button class="lang-btn" data-lang="tg" type="button">TJ</button>
+      </div>
+      <p class="eyebrow" data-i18n="account.welcomeBack">С возвращением</p>
+      <h1 data-i18n="account.signIn">Войти в аккаунт</h1>
+      <p class="portal-intro" data-i18n="account.signInText">Продолжите обучение в личном кабинете.</p>
       <form id="loginForm" class="portal-form">
         <label class="field">
-          <span>Email</span>
+          <span data-i18n="account.email">Email</span>
           <input name="email" type="email" autocomplete="email" maxlength="254" required />
         </label>
         <label class="field">
-          <span>Пароль</span>
+          <span data-i18n="account.password">Пароль</span>
           <input name="password" type="password" autocomplete="current-password" maxlength="128" required />
         </label>
-        <button class="btn btn-primary" type="submit">Войти</button>
+        <button class="btn btn-primary" type="submit" data-i18n="account.signIn">Войти</button>
         <p class="form-message" role="status" aria-live="polite"></p>
       </form>
-      <p class="portal-switch">Нет аккаунта? <a href="/register.html">Зарегистрироваться</a></p>
-      <a class="portal-home" href="/">← На главную</a>
+      <p class="portal-switch"><span data-i18n="account.noAccount">Нет аккаунта?</span> <a href="/register.html" data-i18n="account.register">Зарегистрироваться</a></p>
+      <a class="portal-home" href="/" data-i18n="account.home">← На главную</a>
     </main>
   </body>
 </html>

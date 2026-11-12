@@ -9,6 +9,7 @@ const express = require('express');
 const { rateLimit } = require('express-rate-limit');
 const helmet = require('helmet');
 const { Pool } = require('pg');
+const { curriculum, getLesson } = require('./curriculum');
 
 const ROOT = __dirname;
 const PUBLIC_DIR = path.join(ROOT, 'public');
@@ -17,7 +18,6 @@ const PORT = Number(process.env.PORT || 3000);
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const SESSION_COOKIE = IS_PRODUCTION ? '__Host-sheyx-session' : 'sheyx-session';
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const VALID_COURSES = new Set(['Frontend', 'Full Stack', 'Python']);
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: IS_PRODUCTION ? { rejectUnauthorized: false } : undefined,
@@ -56,14 +56,6 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: 'Слишком много попыток. Попробуйте позже.' }
 });
-const inquiryLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  limit: 5,
-  standardHeaders: 'draft-8',
-  legacyHeaders: false,
-  message: { error: 'Слишком много заявок. Попробуйте позже.' }
-});
-
 function httpError(status, message) {
   const error = new Error(message);
   error.status = status;
@@ -260,53 +252,180 @@ app.get('/api/me', requireUser, (req, res) => {
   res.json({ user: req.user });
 });
 
-app.get('/api/me/applications', requireUser, async (req, res, next) => {
+app.get('/api/leaderboard', async (req, res, next) => {
   try {
     const result = await pool.query(
-      `SELECT id, course, status, created_at
-       FROM applications
-       WHERE user_id = $1
-       ORDER BY created_at DESC
-       LIMIT 100`,
-      [req.user.id]
+      `SELECT u.id, u.name,
+              COALESCE(SUM(lp.xp_earned), 0)::INTEGER AS xp,
+              COUNT(lp.lesson_id)::INTEGER AS completed_lessons
+       FROM users u
+       LEFT JOIN lesson_progress lp ON lp.user_id = u.id
+       WHERE u.role = 'student'
+       GROUP BY u.id, u.name
+       ORDER BY xp DESC, completed_lessons DESC, u.created_at ASC, u.id ASC
+       LIMIT 20`
     );
-    res.json({ applications: result.rows });
+    res.json({ leaders: result.rows });
   } catch (error) {
     next(error);
   }
 });
 
-app.post('/api/applications', inquiryLimiter, requireSameOrigin, async (req, res, next) => {
+app.get('/api/courses', requireUser, async (req, res, next) => {
   try {
-    const body = req.body || {};
-    const name = typeof body.name === 'string' ? body.name.trim() : '';
-    const email = normalizeEmail(body.email);
-    const phone = typeof body.phone === 'string' ? body.phone.trim() : '';
-    const course = typeof body.course === 'string' ? body.course : '';
-    const message = typeof body.message === 'string' ? body.message.trim() : '';
+    const result = await pool.query(
+      'SELECT course_id, lesson_id FROM lesson_progress WHERE user_id = $1',
+      [req.user.id]
+    );
+    const completedLessons = new Set(result.rows.map((row) => row.lesson_id));
+    const lang = ['ru', 'en', 'tg'].includes(req.query.lang) ? req.query.lang : 'ru';
+    const courses = curriculum.map((course) => ({
+      id: course.id,
+      title: course.title[lang],
+      description: course.description[lang],
+      lessons: course.lessons.map((lesson, index) => ({
+        id: lesson.id,
+        title: lesson.title[lang],
+        xp: lesson.xp,
+        completed: completedLessons.has(lesson.id),
+        unlocked: index === 0 || completedLessons.has(course.lessons[index - 1].id)
+      }))
+    }));
+    res.json({ courses });
+  } catch (error) {
+    next(error);
+  }
+});
 
-    if (name.length < 2 || name.length > 80 || !isValidEmail(email)
-      || phone.length > 35 || !VALID_COURSES.has(course) || message.length > 2000) {
-      throw httpError(400, 'Проверьте имя, email, курс и длину сообщения.');
+app.get('/api/courses/:courseId/lessons/:lessonId', requireUser, async (req, res, next) => {
+  try {
+    const record = getLesson(req.params.lessonId);
+    if (!record || record.course.id !== req.params.courseId) {
+      throw httpError(404, 'Урок не найден.');
     }
 
-    const token = requestToken(req);
-    let userId = null;
-    if (token && token.length <= 200) {
-      const session = await pool.query(
-        'SELECT user_id FROM sessions WHERE token_hash = $1 AND expires_at > NOW()',
-        [hashToken(token)]
+    if (record.index > 0) {
+      const previous = record.course.lessons[record.index - 1];
+      const result = await pool.query(
+        'SELECT 1 FROM lesson_progress WHERE user_id = $1 AND lesson_id = $2',
+        [req.user.id, previous.id]
       );
-      userId = session.rows[0]?.user_id || null;
+      if (result.rowCount === 0) {
+        throw httpError(403, 'Сначала заверши предыдущий урок.');
+      }
+    }
+
+    const lang = ['ru', 'en', 'tg'].includes(req.query.lang) ? req.query.lang : 'ru';
+    const completed = await pool.query(
+      'SELECT 1 FROM lesson_progress WHERE user_id = $1 AND lesson_id = $2',
+      [req.user.id, record.lesson.id]
+    );
+    const { correctOption, ...content } = record.lesson.content[lang];
+    res.json({
+      course: { id: record.course.id, title: record.course.title[lang] },
+      lesson: {
+        id: record.lesson.id,
+        title: record.lesson.title[lang],
+        xp: record.lesson.xp,
+        content,
+        completed: completed.rowCount > 0,
+        previousLessonId: record.course.lessons[record.index - 1]?.id || null,
+        nextLessonId: record.course.lessons[record.index + 1]?.id || null
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/lessons/:lessonId/answer', requireSameOrigin, requireUser, async (req, res, next) => {
+  try {
+    const record = getLesson(req.params.lessonId);
+    if (!record) {
+      throw httpError(404, 'Урок не найден.');
+    }
+    const answerIndex = req.body?.answerIndex;
+    if (!Number.isInteger(answerIndex)
+      || answerIndex < 0
+      || answerIndex >= record.lesson.content.ru.options.length) {
+      throw httpError(400, 'Выбери один из вариантов ответа.');
+    }
+
+    if (record.index > 0) {
+      const previous = record.course.lessons[record.index - 1];
+      const prerequisite = await pool.query(
+        'SELECT 1 FROM lesson_progress WHERE user_id = $1 AND lesson_id = $2',
+        [req.user.id, previous.id]
+      );
+      if (prerequisite.rowCount === 0) {
+        throw httpError(403, 'Сначала заверши предыдущий урок.');
+      }
+    }
+
+    if (answerIndex !== record.lesson.content.ru.correctOption) {
+      return res.json({ correct: false, xpAwarded: 0 });
     }
 
     const result = await pool.query(
-      `INSERT INTO applications (user_id, name, email, phone, course, message)
-       VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING id, course, status, created_at`,
-      [userId, name, email, phone || null, course, message]
+      `INSERT INTO lesson_progress (user_id, lesson_id, course_id, xp_earned)
+       VALUES ($1, $2, $3, $4)
+       ON CONFLICT (user_id, lesson_id) DO NOTHING
+       RETURNING lesson_id`,
+      [req.user.id, record.lesson.id, record.course.id, record.lesson.xp]
     );
-    res.status(201).json({ application: result.rows[0] });
+    const total = await pool.query(
+      'SELECT COALESCE(SUM(xp_earned), 0)::INTEGER AS xp FROM lesson_progress WHERE user_id = $1',
+      [req.user.id]
+    );
+    res.json({
+      correct: true,
+      xpAwarded: result.rowCount > 0 ? record.lesson.xp : 0,
+      totalXp: total.rows[0].xp,
+      nextLessonId: record.course.lessons[record.index + 1]?.id || null
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/me/progress', requireUser, async (req, res, next) => {
+  try {
+    const result = await pool.query(
+      `SELECT course_id, lesson_id, xp_earned
+       FROM lesson_progress
+       WHERE user_id = $1`,
+      [req.user.id]
+    );
+    const completedLessons = new Set(result.rows.map((row) => row.lesson_id));
+    const totalXp = result.rows.reduce((total, row) => total + row.xp_earned, 0);
+    const rank = await pool.query(
+      `WITH rankings AS (
+         SELECT u.id,
+                ROW_NUMBER() OVER (
+                  ORDER BY COALESCE(SUM(lp.xp_earned), 0) DESC,
+                           COUNT(lp.lesson_id) DESC,
+                           u.created_at ASC,
+                           u.id ASC
+                ) AS position
+         FROM users u
+         LEFT JOIN lesson_progress lp ON lp.user_id = u.id
+         WHERE u.role = 'student'
+         GROUP BY u.id
+       )
+       SELECT position FROM rankings WHERE id = $1`,
+      [req.user.id]
+    );
+    res.json({
+      totalXp,
+      rank: rank.rows[0]?.position || null,
+      completedLessons: completedLessons.size,
+      totalLessons: curriculum.reduce((total, course) => total + course.lessons.length, 0),
+      courses: curriculum.map((course) => ({
+        id: course.id,
+        completedLessons: course.lessons.filter((lesson) => completedLessons.has(lesson.id)).length,
+        totalLessons: course.lessons.length
+      }))
+    });
   } catch (error) {
     next(error);
   }
@@ -315,47 +434,16 @@ app.post('/api/applications', inquiryLimiter, requireSameOrigin, async (req, res
 app.get('/api/admin/users', requireUser, requireAdmin, async (req, res, next) => {
   try {
     const result = await pool.query(
-      `SELECT id, name, email, role, created_at
-       FROM users
-       ORDER BY created_at DESC
+      `SELECT u.id, u.name, u.email, u.role, u.created_at,
+              COALESCE(SUM(lp.xp_earned), 0)::INTEGER AS xp,
+              COUNT(lp.lesson_id)::INTEGER AS completed_lessons
+       FROM users u
+       LEFT JOIN lesson_progress lp ON lp.user_id = u.id
+       GROUP BY u.id
+       ORDER BY xp DESC, completed_lessons DESC, u.created_at ASC
        LIMIT 500`
     );
     res.json({ users: result.rows });
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.get('/api/admin/applications', requireUser, requireAdmin, async (req, res, next) => {
-  try {
-    const result = await pool.query(
-      `SELECT id, user_id, name, email, phone, course, message, status, created_at
-       FROM applications
-       ORDER BY created_at DESC
-       LIMIT 500`
-    );
-    res.json({ applications: result.rows });
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.patch('/api/admin/applications/:id', requireSameOrigin, requireUser, requireAdmin, async (req, res, next) => {
-  try {
-    const id = Number(req.params.id);
-    const status = req.body?.status;
-    if (!Number.isSafeInteger(id) || id < 1 || !['new', 'contacted', 'closed'].includes(status)) {
-      throw httpError(400, 'Некорректный номер заявки или статус.');
-    }
-
-    const result = await pool.query(
-      'UPDATE applications SET status = $1 WHERE id = $2 RETURNING id, status',
-      [status, id]
-    );
-    if (result.rowCount === 0) {
-      throw httpError(404, 'Заявка не найдена.');
-    }
-    res.json({ application: result.rows[0] });
   } catch (error) {
     next(error);
   }

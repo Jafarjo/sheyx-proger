@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Изучай программирование на sheyx-proger: уроки, задания и XP." />
+    <title>Курсы программирования — sheyx-proger</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <script src="/script.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body class="portal-page learning-page">
+    <div class="page-bg"></div>
+    <main class="portal-card dashboard-card">
+      <header class="portal-header">
+        <a class="brand" href="/">
+          <span class="brand-mark">S</span><span>sheyx-proger</span>
+        </a>
+        <div class="header-actions">
+          <div class="lang-switcher" aria-label="Language">
+            <button class="lang-btn" data-lang="ru" type="button">RU</button><button class="lang-btn" data-lang="en" type="button">EN</button><button class="lang-btn" data-lang="tg" type="button">TJ</button>
+          </div>
+          <a class="btn btn-secondary small" href="/dashboard.html" data-i18n="account.myProgress">Мой прогресс</a>
+          <button class="btn btn-secondary small" type="button" data-logout data-i18n="account.logout">Выйти</button>
+        </div>
+      </header>
+      <div id="learnLoading" class="loading-state" data-i18n="account.loadingCourses">Загружаем курсы…</div>
+      <section id="learnContent" class="hidden">
+        <p class="eyebrow" data-i18n="account.pickPath">Выбери своё направление</p>
+        <h1 data-i18n="account.coursesAndLessons">Курсы и уроки</h1>
+        <p class="portal-intro" data-i18n="account.courseInstructions">Изучай тему, выполняй мини-проверку и получай XP. Следующий урок открывается после предыдущего.</p>
+        <div id="courseList" class="learning-course-list"></div>
+      </section>
+    </main>
+  </body>
+</html>

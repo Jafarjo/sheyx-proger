@@ -3,46 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Личный кабинет sheyx-proger." />
-    <title>Личный кабинет — sheyx-proger</title>
+    <meta name="description" content="Личный кабинет и прогресс обучения sheyx-proger." />
+    <title>Мой прогресс — sheyx-proger</title>
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/app.css" />
+    <script src="/script.js" defer></script>
     <script src="/app.js" defer></script>
   </head>
-  <body class="portal-page">
+  <body class="portal-page learning-page">
     <div class="page-bg"></div>
     <main class="portal-card dashboard-card">
       <header class="portal-header">
         <a class="brand" href="/">
           <span class="brand-mark">S</span><span>sheyx-proger</span>
         </a>
-        <button class="btn btn-secondary small" type="button" data-logout>Выйти</button>
+        <div class="header-actions">
+          <div class="lang-switcher" aria-label="Language">
+            <button class="lang-btn" data-lang="ru" type="button">RU</button><button class="lang-btn" data-lang="en" type="button">EN</button><button class="lang-btn" data-lang="tg" type="button">TJ</button>
+          </div>
+          <a class="btn btn-secondary small" href="/learn.html" data-i18n="account.allCourses">Все курсы</a>
+          <button class="btn btn-secondary small" type="button" data-logout data-i18n="account.logout">Выйти</button>
+        </div>
       </header>
-      <div id="dashboardLoading" class="loading-state">Загружаем ваш кабинет…</div>
+      <div id="dashboardLoading" class="loading-state" data-i18n="account.loadingProgress">Загружаем ваш прогресс…</div>
       <section id="dashboardContent" class="hidden">
-        <p class="eyebrow">Ваше обучение</p>
-        <h1>Личный кабинет</h1>
+        <p class="eyebrow" data-i18n="account.learningZone">Твоя учебная зона</p>
+        <h1><span data-i18n="account.hello">Привет,</span> <span id="profileName">ученик</span>!</h1>
+        <p class="portal-intro" data-i18n="account.keepGoing">Каждый урок приближает тебя к следующему уровню.</p>
         <div class="profile-grid">
-          <div class="profile-stat"><span>Имя</span><strong id="profileName">—</strong></div>
-          <div class="profile-stat"><span>Email</span><strong id="profileEmail">—</strong></div>
-          <div class="profile-stat"><span>Дата регистрации</span><strong id="profileJoined">—</strong></div>
+          <div class="profile-stat xp-stat"><span data-i18n="account.experience">Твои очки опыта</span><strong><span id="profileXp">0</span> XP</strong></div>
+          <div class="profile-stat"><span data-i18n="account.lessonsCompleted">Пройдено уроков</span><strong id="profileLessons">0 / 6</strong></div>
+          <div class="profile-stat"><span data-i18n="account.rank">Место в рейтинге</span><strong id="profileRank">—</strong></div>
         </div>
-        <div class="dashboard-panel">
+        <section class="dashboard-panel">
           <div class="panel-title-row">
-            <div>
-              <p class="eyebrow">История обращений</p>
-              <h2>Ваши заявки на обучение</h2>
-            </div>
-            <a class="btn btn-primary small" href="/#contact">Оставить заявку</a>
+            <div><p class="eyebrow" data-i18n="account.continueLearning">Продолжай учиться</p><h2 data-i18n="account.myCourses">Твои курсы</h2></div>
+            <a class="btn btn-primary small" href="/learn.html" data-i18n="account.chooseCourse">Выбрать курс</a>
           </div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Курс</th><th>Статус</th><th>Дата</th></tr></thead>
-              <tbody id="myApplications"></tbody>
-            </table>
-            <p id="noApplications" class="empty-state hidden">Пока заявок нет.</p>
+          <div id="dashboardCourses" class="dashboard-course-grid"></div>
+        </section>
+        <section class="dashboard-panel">
+          <div class="panel-title-row">
+            <div><p class="eyebrow" data-i18n="account.compete">Соревнуйся и расти</p><h2 data-i18n="account.weekLeaders">Лидеры</h2></div>
+            <a class="text-link" href="/#leaders" data-i18n="account.fullLeaderboard">Общий рейтинг</a>
           </div>
-        </div>
+          <ol id="dashboardLeaderboard" class="leaderboard-list"></ol>
+        </section>
         <p class="form-message" data-page-message role="status"></p>
       </section>
     </main>

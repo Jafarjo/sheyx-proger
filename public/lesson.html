@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Урок программирования — sheyx-proger." />
+    <title>Урок — sheyx-proger</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <script src="/script.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body class="portal-page learning-page lesson-page">
+    <div class="page-bg"></div>
+    <main class="portal-card dashboard-card lesson-shell">
+      <header class="portal-header">
+        <a class="brand" href="/">
+          <span class="brand-mark">S</span><span>sheyx-proger</span>
+        </a>
+        <div class="header-actions">
+          <div class="lang-switcher" aria-label="Language">
+            <button class="lang-btn" data-lang="ru" type="button">RU</button><button class="lang-btn" data-lang="en" type="button">EN</button><button class="lang-btn" data-lang="tg" type="button">TJ</button>
+          </div>
+          <a class="btn btn-secondary small" href="/learn.html" data-i18n="account.allLessons">Все уроки</a>
+          <a class="btn btn-secondary small" href="/dashboard.html" data-i18n="account.myProgress">Мой прогресс</a>
+        </div>
+      </header>
+      <div id="lessonLoading" class="loading-state" data-i18n="account.openingLesson">Открываем урок…</div>
+      <article id="lessonContent" class="hidden">
+        <div class="lesson-heading">
+          <div><p class="eyebrow" id="lessonCourse">Курс</p><h1 id="lessonTitle">Урок</h1></div>
+          <span id="lessonXp" class="lesson-xp">+20 XP</span>
+        </div>
+        <section class="lesson-copy">
+          <p id="lessonIntro"></p>
+          <p id="lessonExplanation"></p>
+          <pre class="code-example"><code id="lessonCode"></code></pre>
+        </section>
+        <section class="lesson-task">
+          <p class="eyebrow" data-i18n="account.tryIt">Попробуй сам</p>
+          <p id="lessonTask"></p>
+        </section>
+        <form id="lessonQuiz" class="quiz-card">
+          <fieldset>
+            <legend id="quizQuestion"></legend>
+            <div id="quizOptions" class="quiz-options"></div>
+          </fieldset>
+          <button class="btn btn-primary" type="submit" data-i18n="account.checkAnswer">Проверить ответ</button>
+          <p id="quizFeedback" class="form-message" role="status" aria-live="polite"></p>
+        </form>
+        <div class="lesson-footer">
+          <a class="text-link" href="/learn.html" data-i18n="account.backToCourses">← К курсам</a>
+          <a id="nextLessonButton" class="btn btn-primary hidden" href="/learn.html" data-i18n="account.nextLesson">Следующий урок →</a>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

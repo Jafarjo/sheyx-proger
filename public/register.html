@@ -7,6 +7,7 @@
     <title>Регистрация — sheyx-proger</title>
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/app.css" />
+    <script src="/script.js" defer></script>
     <script src="/app.js" defer></script>
   </head>
   <body class="portal-page">
@@ -15,27 +16,30 @@
       <a class="brand portal-brand" href="/">
         <span class="brand-mark">S</span><span>sheyx-proger</span>
       </a>
-      <p class="eyebrow">Начни свой путь</p>
-      <h1>Создать аккаунт</h1>
-      <p class="portal-intro">Зарегистрируйтесь, чтобы сохранить заявки и следить за обучением.</p>
+      <div class="portal-language lang-switcher" aria-label="Language">
+        <button class="lang-btn" data-lang="ru" type="button">RU</button><button class="lang-btn" data-lang="en" type="button">EN</button><button class="lang-btn" data-lang="tg" type="button">TJ</button>
+      </div>
+      <p class="eyebrow" data-i18n="account.startPath">Начни свой путь</p>
+      <h1 data-i18n="account.createAccount">Создать аккаунт</h1>
+      <p class="portal-intro" data-i18n="account.registerText">Создай аккаунт, чтобы сохранять прогресс, получать XP и участвовать в рейтинге.</p>
       <form id="registerForm" class="portal-form">
         <label class="field">
-          <span>Имя</span>
+          <span data-i18n="account.name">Имя</span>
           <input name="name" type="text" autocomplete="name" minlength="2" maxlength="80" required />
         </label>
         <label class="field">
-          <span>Email</span>
+          <span data-i18n="account.email">Email</span>
           <input name="email" type="email" autocomplete="email" maxlength="254" required />
         </label>
         <label class="field">
-          <span>Пароль (не менее 10 символов)</span>
+          <span data-i18n="account.passwordLength">Пароль (не менее 10 символов)</span>
           <input name="password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required />
         </label>
-        <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
+        <button class="btn btn-primary" type="submit" data-i18n="account.register">Зарегистрироваться</button>
         <p class="form-message" role="status" aria-live="polite"></p>
       </form>
-      <p class="portal-switch">Уже есть аккаунт? <a href="/login.html">Войти</a></p>
-      <a class="portal-home" href="/">← На главную</a>
+      <p class="portal-switch"><span data-i18n="account.hasAccount">Уже есть аккаунт?</span> <a href="/login.html" data-i18n="account.signIn">Войти</a></p>
+      <a class="portal-home" href="/" data-i18n="account.home">← На главную</a>
     </main>
   </body>
 </html>
