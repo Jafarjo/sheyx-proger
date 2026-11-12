@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Личный кабинет sheyx-proger." />
+    <title>Личный кабинет — sheyx-proger</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body class="portal-page">
+    <div class="page-bg"></div>
+    <main class="portal-card dashboard-card">
+      <header class="portal-header">
+        <a class="brand" href="/">
+          <span class="brand-mark">S</span><span>sheyx-proger</span>
+        </a>
+        <button class="btn btn-secondary small" type="button" data-logout>Выйти</button>
+      </header>
+      <div id="dashboardLoading" class="loading-state">Загружаем ваш кабинет…</div>
+      <section id="dashboardContent" class="hidden">
+        <p class="eyebrow">Ваше обучение</p>
+        <h1>Личный кабинет</h1>
+        <div class="profile-grid">
+          <div class="profile-stat"><span>Имя</span><strong id="profileName">—</strong></div>
+          <div class="profile-stat"><span>Email</span><strong id="profileEmail">—</strong></div>
+          <div class="profile-stat"><span>Дата регистрации</span><strong id="profileJoined">—</strong></div>
+        </div>
+        <div class="dashboard-panel">
+          <div class="panel-title-row">
+            <div>
+              <p class="eyebrow">История обращений</p>
+              <h2>Ваши заявки на обучение</h2>
+            </div>
+            <a class="btn btn-primary small" href="/#contact">Оставить заявку</a>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Курс</th><th>Статус</th><th>Дата</th></tr></thead>
+              <tbody id="myApplications"></tbody>
+            </table>
+            <p id="noApplications" class="empty-state hidden">Пока заявок нет.</p>
+          </div>
+        </div>
+        <p class="form-message" data-page-message role="status"></p>
+      </section>
+    </main>
+  </body>
+</html>

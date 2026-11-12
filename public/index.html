@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="sheyx-proger — совремённый сайт для изучения программирования с нуля на русском, английском и таджикском языках."
+    />
+    <title>sheyx-proger</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-bg"></div>
+
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="#home" class="brand" aria-label="sheyx-proger home">
+          <span class="brand-mark">S</span>
+          <span>sheyx-proger</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="#home" data-i18n="nav.home">Главная</a>
+          <a href="#courses" data-i18n="nav.courses">Курсы</a>
+          <a href="#roadmap" data-i18n="nav.roadmap">Путь</a>
+          <a href="#reviews" data-i18n="nav.reviews">Отзывы</a>
+          <a href="#faq" data-i18n="nav.faq">FAQ</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="lang-switcher" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="ru" type="button">RU</button>
+            <button class="lang-btn" data-lang="en" type="button">EN</button>
+            <button class="lang-btn" data-lang="tg" type="button">TJ</button>
+          </div>
+          <a class="btn btn-secondary" href="/login.html" data-i18n="nav.login">Войти</a>
+          <a class="btn btn-primary" href="/register.html" data-i18n="cta.start">Начать</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow" data-i18n="hero.badge">Для начинающих и тех, кто хочет расти</p>
+            <h1 data-i18n="hero.title">Учись программировать с нуля и создавай свой цифровой мир</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">
+              Пошаговые курсы, реальные проекты и поддержка наставников для тех, кто хочет выйти
+              в IT уверенно и быстро.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#courses" data-i18n="cta.primary">Начать обучение</a>
+              <a class="btn btn-secondary" href="#roadmap" data-i18n="cta.secondary">Смотреть путь</a>
+            </div>
+
+            <ul class="trust-list">
+              <li data-i18n="hero.item1">Практика с первого урока</li>
+              <li data-i18n="hero.item2">Понятный язык объяснений</li>
+              <li data-i18n="hero.item3">Поддержка каждого студента</li>
+            </ul>
+          </div>
+
+          <div class="hero-panel" aria-label="Learning dashboard">
+            <div class="panel-card main-card">
+              <div class="panel-head">
+                <span data-i18n="panel.label">Ваш прогресс</span>
+                <span class="status-dot"></span>
+              </div>
+              <div class="stats-row">
+                <div>
+                  <strong>82%</strong>
+                  <small data-i18n="panel.progress">Путь к первой работе</small>
+                </div>
+                <div class="ring-wrap">
+                  <div class="ring">
+                    <span>82</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mini-grid">
+              <div class="panel-card small-card">
+                <span class="label" data-i18n="panel.lessons">Уроки</span>
+                <strong>60+</strong>
+              </div>
+              <div class="panel-card small-card highlight">
+                <span class="label" data-i18n="panel.projects">Проекты</span>
+                <strong>18</strong>
+              </div>
+            </div>
+
+            <div class="panel-card lesson-card">
+              <div class="lesson-topline">
+                <span data-i18n="panel.next">Следующий модуль</span>
+                <span class="pill" data-i18n="panel.today">Сегодня</span>
+              </div>
+              <h3 data-i18n="panel.module">JavaScript для реальных задач</h3>
+              <p data-i18n="panel.moduleText">Создаём интерфейс, логику и полезные мини-приложения.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-strip">
+        <div class="container stats-grid">
+          <div>
+            <strong>3.2K+</strong>
+            <span data-i18n="stats.students">Студентов</span>
+          </div>
+          <div>
+            <strong>4.9/5</strong>
+            <span data-i18n="stats.rating">Средний рейтинг</span>
+          </div>
+          <div>
+            <strong>12 нед</strong>
+            <span data-i18n="stats.track">Путь до первого проекта</span>
+          </div>
+          <div>
+            <strong>24/7</strong>
+            <span data-i18n="stats.support">Поддержка</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="courses" class="section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow" data-i18n="courses.label">Что ты изучишь</p>
+            <h2 data-i18n="courses.title">Курсы для реального результата</h2>
+          </div>
+
+          <div class="course-grid">
+            <article class="course-card">
+              <div class="icon-box blue">01</div>
+              <h3 data-i18n="course.frontend.title">Frontend</h3>
+              <p data-i18n="course.frontend.text">HTML, CSS, JavaScript, адаптивный дизайн и современные интерфейсы.</p>
+              <ul>
+                <li data-i18n="course.frontend.item1">Сайт с нуля</li>
+                <li data-i18n="course.frontend.item2">Анимации и UI</li>
+                <li data-i18n="course.frontend.item3">Интерактивность</li>
+              </ul>
+            </article>
+
+            <article class="course-card featured">
+              <div class="icon-box cyan">02</div>
+              <h3 data-i18n="course.fullstack.title">Full Stack</h3>
+              <p data-i18n="course.fullstack.text">Работа с фронтендом, сервером, API и базами данных.</p>
+              <ul>
+                <li data-i18n="course.fullstack.item1">Node.js</li>
+                <li data-i18n="course.fullstack.item2">API и базы</li>
+                <li data-i18n="course.fullstack.item3">Полный цикл проекта</li>
+              </ul>
+            </article>
+
+            <article class="course-card">
+              <div class="icon-box purple">03</div>
+              <h3 data-i18n="course.python.title">Python</h3>
+              <p data-i18n="course.python.text">Логика, автоматизация, работа с данными и создание полезных приложений.</p>
+              <ul>
+                <li data-i18n="course.python.item1">Основы Python</li>
+                <li data-i18n="course.python.item2">Автоматизация</li>
+                <li data-i18n="course.python.item3">Базы и скрипты</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="roadmap" class="section alt-section">
+        <div class="container">
+          <div class="section-heading left">
+            <p class="eyebrow" data-i18n="roadmap.label">Пошаговый путь</p>
+            <h2 data-i18n="roadmap.title">План обучения, который ведёт к результату</h2>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <span class="step">1</span>
+              <div>
+                <h3 data-i18n="roadmap.step1.title">Основы</h3>
+                <p data-i18n="roadmap.step1.text">Понимание компьютера, кода, логики и первых программ.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="step">2</span>
+              <div>
+                <h3 data-i18n="roadmap.step2.title">Frontend</h3>
+                <p data-i18n="roadmap.step2.text">Сайты, CSS, JavaScript, адаптивность и пользовательский опыт.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="step">3</span>
+              <div>
+                <h3 data-i18n="roadmap.step3.title">Backend</h3>
+                <p data-i18n="roadmap.step3.text">API, серверы, базы данных и логика бизнес-процессов.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="step">4</span>
+              <div>
+                <h3 data-i18n="roadmap.step4.title">Портфолио</h3>
+                <p data-i18n="roadmap.step4.text">Реальные проекты, репозиторий, резюме и первый шаг в IT.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews" class="section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow" data-i18n="reviews.label">Отзывы</p>
+            <h2 data-i18n="reviews.title">Студенты уже растут вместе с нами</h2>
+          </div>
+
+          <div class="review-grid">
+            <article class="review-card">
+              <div class="stars">★★★★★</div>
+              <p data-i18n="review1.text">“Сначала боялась, что ничего не получится. Но пошаговые уроки и практика помогли мне сделать первый проект и начать работать в студии.”</p>
+              <div class="person">
+                <strong>Милана</strong>
+                <span data-i18n="review1.role">Frontend-студентка</span>
+              </div>
+            </article>
+
+            <article class="review-card">
+              <div class="stars">★★★★★</div>
+              <p data-i18n="review2.text">“Мне понравился понятный стиль обучения. Я реально видел результат: от простых задач до работы с API и полноценными интерфейсами.”</p>
+              <div class="person">
+                <strong>Рустам</strong>
+                <span data-i18n="review2.role">Full Stack</span>
+              </div>
+            </article>
+
+            <article class="review-card">
+              <div class="stars">★★★★★</div>
+              <p data-i18n="review3.text">“Платформу очень удобно использовать. Есть чёткая структура, поддержка и много практики. Я начал с нуля и сейчас уже пишу свои проекты.”</p>
+              <div class="person">
+                <strong>Нилуфар</strong>
+                <span data-i18n="review3.role">Python-студентка</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="section faq-section">
+        <div class="container faq-wrap">
+          <div class="section-heading left">
+            <p class="eyebrow" data-i18n="faq.label">FAQ</p>
+            <h2 data-i18n="faq.title">Вопросы, которые часто задают</h2>
+          </div>
+
+          <div class="faq-list">
+            <details open>
+              <summary data-i18n="faq.q1">Нужно ли иметь опыт в программировании?</summary>
+              <p data-i18n="faq.a1">Нет. Курсы рассчитаны на новичков и начинаются с самых основ.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q2">Сколько времени занимает обучение?</summary>
+              <p data-i18n="faq.a2">Обычно 2–4 месяца в активном темпе, в зависимости от целей и времени.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q3">Есть ли поддержка наставников?</summary>
+              <p data-i18n="faq.a3">Да, вы получаете понятные уроки, задания и регулярную поддержку на пути обучения.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section alt-section">
+        <div class="container contact-shell">
+          <div class="section-heading left">
+            <p class="eyebrow" data-i18n="contact.label">Связаться с нами</p>
+            <h2 data-i18n="contact.title">Оставьте заявку на обучение</h2>
+            <p data-i18n="contact.text">Напишите, какой курс вас интересует — команда sheyx-proger свяжется с вами.</p>
+          </div>
+          <form id="inquiryForm" class="contact-form">
+            <label class="field">
+              <span data-i18n="contact.name">Имя</span>
+              <input name="name" type="text" autocomplete="name" minlength="2" maxlength="80" required />
+            </label>
+            <label class="field">
+              <span data-i18n="contact.email">Email</span>
+              <input name="email" type="email" autocomplete="email" maxlength="254" required />
+            </label>
+            <label class="field">
+              <span data-i18n="contact.phone">Телефон (необязательно)</span>
+              <input name="phone" type="tel" autocomplete="tel" maxlength="35" />
+            </label>
+            <label class="field">
+              <span data-i18n="contact.course">Интересующий курс</span>
+              <select name="course" required>
+                <option value="" data-i18n="contact.coursePlaceholder">Выберите курс</option>
+                <option value="Frontend">Frontend</option>
+                <option value="Full Stack">Full Stack</option>
+                <option value="Python">Python</option>
+              </select>
+            </label>
+            <label class="field field-wide">
+              <span data-i18n="contact.message">Сообщение</span>
+              <textarea name="message" rows="4" maxlength="2000" placeholder="Расскажите о вашей цели" data-i18n-placeholder="contact.messagePlaceholder"></textarea>
+            </label>
+            <button class="btn btn-primary" type="submit" data-i18n="contact.submit">Отправить заявку</button>
+            <p id="inquiryMessage" class="form-message" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <div>
+          <a href="#home" class="brand footer-brand">
+            <span class="brand-mark">S</span>
+            <span>sheyx-proger</span>
+          </a>
+        </div>
+        <div class="footer-links">
+          <a href="#courses" data-i18n="nav.courses">Курсы</a>
+          <a href="#roadmap" data-i18n="nav.roadmap">Путь</a>
+          <a href="#reviews" data-i18n="nav.reviews">Отзывы</a>
+        </div>
+        <a class="btn btn-primary small" href="/register.html" data-i18n="footer.cta">Начать сейчас</a>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Панель администратора sheyx-proger." />
+    <title>Админ-панель — sheyx-proger</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body class="portal-page">
+    <div class="page-bg"></div>
+    <main class="portal-card dashboard-card admin-card">
+      <header class="portal-header">
+        <a class="brand" href="/">
+          <span class="brand-mark">S</span><span>sheyx-proger</span>
+        </a>
+        <div class="header-actions">
+          <a class="btn btn-secondary small" href="/dashboard.html">Кабинет</a>
+          <button class="btn btn-secondary small" type="button" data-logout>Выйти</button>
+        </div>
+      </header>
+      <div id="adminLoading" class="loading-state">Проверяем права доступа…</div>
+      <section id="adminContent" class="hidden">
+        <p class="eyebrow">Управление платформой</p>
+        <h1>Панель администратора</h1>
+        <p class="portal-intro">Вход выполнен как <strong id="adminEmail"></strong>.</p>
+        <div class="admin-overview">
+          <div class="profile-stat"><span>Пользователи</span><strong id="userCount">0</strong></div>
+          <div class="profile-stat"><span>Заявки</span><strong id="applicationCount">0</strong></div>
+          <div class="profile-stat"><span>Новые заявки</span><strong id="newApplicationCount">0</strong></div>
+        </div>
+        <div class="dashboard-panel">
+          <div class="panel-title-row"><div><p class="eyebrow">Обращения</p><h2>Заявки с сайта</h2></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Дата</th><th>Имя / email</th><th>Телефон</th><th>Курс и сообщение</th><th>Статус</th></tr></thead>
+              <tbody id="adminApplications"></tbody>
+            </table>
+            <p id="noAdminApplications" class="empty-state hidden">Заявок пока нет.</p>
+          </div>
+        </div>
+        <div class="dashboard-panel">
+          <div class="panel-title-row"><div><p class="eyebrow">Аккаунты</p><h2>Пользователи</h2></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Имя</th><th>Email</th><th>Роль</th><th>Регистрация</th></tr></thead>
+              <tbody id="adminUsers"></tbody>
+            </table>
+          </div>
+        </div>
+        <p class="form-message" data-page-message role="status"></p>
+      </section>
+    </main>
+  </body>
+</html>
